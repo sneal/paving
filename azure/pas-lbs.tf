@@ -5,6 +5,7 @@ resource "azurerm_public_ip" "web-lb" {
   resource_group_name     = azurerm_resource_group.platform.name
   allocation_method       = "Static"
   sku                     = "Standard"
+  availability_zone       = "No-Zone"
   idle_timeout_in_minutes = 30
 
   tags = merge(
@@ -22,6 +23,7 @@ resource "azurerm_lb" "web" {
   frontend_ip_configuration {
     name                 = "frontendip"
     public_ip_address_id = azurerm_public_ip.web-lb.id
+    availability_zone    = "No-Zone"
   }
 
   tags = merge(
@@ -101,6 +103,7 @@ resource "azurerm_public_ip" "tcp-lb" {
   resource_group_name = azurerm_resource_group.platform.name
   allocation_method   = "Static"
   sku                 = "Standard"
+  availability_zone   = "No-Zone"
 
   tags = merge(
     var.tags,
@@ -117,6 +120,7 @@ resource "azurerm_lb" "tcp" {
   frontend_ip_configuration {
     name                 = "frontendip"
     public_ip_address_id = azurerm_public_ip.tcp-lb.id
+    availability_zone    = "No-Zone"
   }
 
   tags = merge(
@@ -174,8 +178,9 @@ resource "azurerm_lb" "mysql" {
   sku                 = "Standard"
 
   frontend_ip_configuration {
-    name      = "frontendip"
-    subnet_id = azurerm_subnet.pas.id
+    name              = "frontendip"
+    subnet_id         = azurerm_subnet.pas.id
+    availability_zone = "No-Zone"
   }
 
   tags = merge(
@@ -231,6 +236,7 @@ resource "azurerm_public_ip" "diego-ssh-lb" {
   resource_group_name = azurerm_resource_group.platform.name
   allocation_method   = "Static"
   sku                 = "Standard"
+  availability_zone   = "No-Zone"
 
   tags = merge(
     var.tags,
@@ -247,6 +253,7 @@ resource "azurerm_lb" "diego-ssh" {
   frontend_ip_configuration {
     name                 = "frontendip"
     public_ip_address_id = azurerm_public_ip.diego-ssh-lb.id
+    availability_zone    = "No-Zone"
   }
 
   tags = merge(
