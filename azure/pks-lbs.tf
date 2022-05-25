@@ -5,6 +5,7 @@ resource "azurerm_public_ip" "pks-lb" {
   resource_group_name = azurerm_resource_group.platform.name
   allocation_method   = "Static"
   sku                 = "Standard"
+  availability_zone   = "No-Zone"
 
   tags = merge(
     var.tags,
